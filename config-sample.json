@@ -1,0 +1,12 @@
+{
+  "run_mode": "development",
+  "port": "8787",
+  "dialect_master": "mysql",
+  "dsn_master": "root@tcp(127.0.0.1:3306)/simple_api?charset=utf8mb4&collation=utf8mb4_bin&parseTime=True&timeout=5s",
+  "idle_conn_master": 0,
+  "max_conn_master": 500,
+  "dialect_slave": "mysql",
+  "dsn_slave": "root@tcp(127.0.0.1:3306)/simple_api?charset=utf8mb4&collation=utf8mb4_bin&parseTime=True&timeout=5s",
+  "idle_conn_slave": 0,
+  "max_conn_slave": 500
+}

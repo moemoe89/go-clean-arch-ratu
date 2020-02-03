@@ -1,0 +1,32 @@
+version: '3'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/go/src/simple-go-clean-arch
+    container_name: golang_api
+    restart: always
+    ports:
+      - "8787:8787"
+    tty: true
+    depends_on:
+      - db
+    networks:
+      - fullstack
+  db:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: simple_api
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+    container_name: golang_db
+    restart: always
+    ports:
+      - "3308:3306"
+    tty: true
+    networks:
+      - fullstack
+networks:
+  fullstack:
+    driver: bridge
