@@ -91,7 +91,7 @@ func (u *userCtrl) Detail(c *gin.Context) {
 
 	id := c.Param("id")
 
-	user, status, err := u.svc.Detail(id)
+	user, status, err := u.svc.Detail(id, model.UserSelectField)
 	if err != nil {
 		c.JSON(status, model.NewGenericResponse(status, cons.ERR, []string{u.lang.Lookup(l, err.Error())}))
 		return
@@ -229,7 +229,7 @@ func (u *userCtrl) Update(c *gin.Context) {
 		return
 	}
 
-	user, status, err := u.svc.Detail(id)
+	user, status, err := u.svc.Detail(id, "id")
 	if err != nil {
 		c.JSON(status, model.NewGenericResponse(status, cons.ERR, []string{u.lang.Lookup(l, err.Error())}))
 		return

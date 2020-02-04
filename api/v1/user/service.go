@@ -13,7 +13,9 @@ import (
 	"database/sql"
 	"errors"
 	"net/http"
+	"time"
 
+	"github.com/rs/xid"
 	"github.com/sirupsen/logrus"
 )
 
@@ -21,7 +23,7 @@ import (
 type Service interface {
 	Create(req *form.UserForm) (*model.UserModel, int, error)
 	Delete(id string) (int, error)
-	Detail(id string) (*model.UserModel, int, error)
+	Detail(id string, selectField string) (*model.UserModel, int, error)
 	List(filter, filterCount map[string]interface{}, where, orderBy, selectField string) ([]*model.UserModel, int, int, error)
 	Update(req *form.UserForm, id string) (*model.UserModel, int, error)
 }
@@ -37,7 +39,17 @@ func NewService(log *logrus.Entry, r Repository) Service {
 }
 
 func (u *implService) Create(req *form.UserForm) (*model.UserModel, int, error) {
-	user, err := u.repository.Create(req)
+	userReq := &model.UserModel{
+		ID:        xid.New().String(),
+		Name:      req.Name,
+		Email:     req.Email,
+		Phone:     req.Phone,
+		Address:   req.Address,
+		CreatedAt: time.Now().UTC(),
+		UpdatedAt: time.Now().UTC(),
+	}
+
+	user, err := u.repository.Create(userReq)
 	if err != nil {
 		u.log.Errorf("can't create user: %s", err.Error())
 		return nil, http.StatusInternalServerError, errors.New("Oops! Something went wrong. Please try again later")
@@ -48,13 +60,7 @@ func (u *implService) Create(req *form.UserForm) (*model.UserModel, int, error) 
 
 func (u *implService) Delete(id string) (int, error) {
 
-	where := "WHERE deleted_at IS NULL"
-	filter := map[string]interface{}{}
-
-	where += " AND id LIKE :id"
-	filter["id"] = id
-
-	_, err := u.repository.GetByID(filter, where, id, "id")
+	_, err := u.repository.GetByID(id, "id")
 	if err == sql.ErrNoRows {
 		return http.StatusNotFound, errors.New("User not found")
 	}
@@ -73,14 +79,8 @@ func (u *implService) Delete(id string) (int, error) {
 	return 0, nil
 }
 
-func (u *implService) Detail(id string) (*model.UserModel, int, error) {
-	where := "WHERE deleted_at IS NULL"
-	filter := map[string]interface{}{}
-
-	where += " AND id LIKE :id"
-	filter["id"] = id
-
-	user, err := u.repository.GetByID(filter, where, id, "id")
+func (u *implService) Detail(id string, selectField string) (*model.UserModel, int, error) {
+	user, err := u.repository.GetByID(id, selectField)
 	if err == sql.ErrNoRows {
 		return nil, http.StatusNotFound, errors.New("User not found")
 	}
@@ -111,7 +111,16 @@ func (u *implService) List(filter, filterCount map[string]interface{}, where, or
 }
 
 func (u *implService) Update(req *form.UserForm, id string) (*model.UserModel, int, error) {
-	user, err := u.repository.Update(req, id)
+	user := &model.UserModel{
+		ID:        id,
+		Name:      req.Name,
+		Phone:     req.Phone,
+		Email:     req.Email,
+		Address:   req.Address,
+		UpdatedAt: time.Now().UTC(),
+	}
+
+	user, err := u.repository.Update(user)
 	if err != nil {
 		u.log.Errorf("can't update user: %s with id %v", err.Error(), id)
 		return nil, http.StatusInternalServerError, errors.New("Oops! Something went wrong. Please try again later")

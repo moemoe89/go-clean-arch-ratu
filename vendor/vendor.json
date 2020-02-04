@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "+Grw5M8BSntHpvCWsM2QIz4ukl0=",
+			"path": "github.com/DATA-DOG/go-sqlmock",
+			"revision": "7d7fc89ac4d6e7994c74cf16a6cb774b0374f2f9",
+			"revisionTime": "2020-01-25T07:47:15Z"
+		},
+		{
 			"checksumSHA1": "iZRJ7l3vbg1KTE7tQvPZrGigEMQ=",
 			"path": "github.com/DeanThompson/ginpprof",
 			"revision": "8c0e31bfeaa87bd40412ee8a8ba383f5f700ff72",
