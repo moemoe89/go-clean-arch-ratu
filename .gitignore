@@ -50,7 +50,7 @@ inuit_rsa.pub
 *.iml
 
 # binary
-simple-go-clear-arch
+simple-go-clean-arch
 app
 
 # out

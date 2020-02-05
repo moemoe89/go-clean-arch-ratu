@@ -7,11 +7,13 @@
 package api_test
 
 import (
+	"simple-go-clean-arch/routers"
+
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"simple-go-clean-arch/routers"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPingRoute(t *testing.T) {
@@ -24,4 +26,6 @@ func TestPingRoute(t *testing.T) {
 	if http.StatusOK != w.Code {
 		t.Errorf("Should return %v, got %v", http.StatusOK, w.Code)
 	}
+
+	assert.Equal(t, http.StatusOK, w.Code)
 }

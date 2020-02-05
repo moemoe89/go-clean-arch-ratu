@@ -11,6 +11,8 @@ import (
 
 	"testing"
 	"net/http"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewGenericResponse(t *testing.T) {
@@ -20,17 +22,9 @@ func TestNewGenericResponse(t *testing.T) {
 
 	resp := model.NewGenericResponse(status, success, messages)
 
-	if status != resp.Status {
-		t.Errorf("Should return %b, got %b", status, resp.Status)
-	}
-
-	if true != resp.Success {
-		t.Errorf("Should return %t, got %t", true, resp.Success)
-	}
-
-	if messages[0] != resp.Messages[0] {
-		t.Errorf("Should return %s, got %s", messages[0], resp.Messages[0])
-	}
+	assert.Equal(t, status, resp.Status)
+	assert.Equal(t, true, resp.Success)
+	assert.Equal(t, messages[0], resp.Messages[0])
 }
 
 func TestNewPaginationResponse(t *testing.T) {
@@ -56,4 +50,9 @@ func TestNewPaginationResponse(t *testing.T) {
 	if totalData != resp.TotalData {
 		t.Errorf("Should return %b, got %b", totalData, resp.TotalData)
 	}
+
+	assert.Equal(t, page, resp.Page)
+	assert.Equal(t, perPage, resp.PerPage)
+	assert.Equal(t, totalPage, resp.TotalPage)
+	assert.Equal(t, totalData, resp.TotalData)
 }

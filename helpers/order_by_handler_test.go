@@ -11,6 +11,8 @@ import (
 	"simple-go-clean-arch/helpers"
 
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestOrderByHandler(t *testing.T) {
@@ -18,9 +20,7 @@ func TestOrderByHandler(t *testing.T) {
 	orderBy := helpers.OrderByHandler(selectField, model.UserModel{})
 	expectedOrderBy := "id ASC"
 
-	if expectedOrderBy != orderBy {
-		t.Errorf("Should return %s, got %s", expectedOrderBy, orderBy)
-	}
+	assert.Equal(t, expectedOrderBy, orderBy)
 }
 
 func TestOrderByHandlerDesc(t *testing.T) {
@@ -28,9 +28,7 @@ func TestOrderByHandlerDesc(t *testing.T) {
 	orderBy := helpers.OrderByHandler(selectField, model.UserModel{})
 	expectedOrderBy := "id DESC"
 
-	if expectedOrderBy != orderBy {
-		t.Errorf("Should return %s, got %s", expectedOrderBy, orderBy)
-	}
+	assert.Equal(t, expectedOrderBy, orderBy)
 }
 
 func TestOrderByHandleEmptyField(t *testing.T) {
@@ -38,9 +36,7 @@ func TestOrderByHandleEmptyField(t *testing.T) {
 	orderBy := helpers.OrderByHandler(selectField, model.UserModel{})
 	expectedOrderBy := ""
 
-	if expectedOrderBy != orderBy {
-		t.Errorf("Should return %s, got %s", expectedOrderBy, orderBy)
-	}
+	assert.Equal(t, expectedOrderBy, orderBy)
 }
 
 func TestOrderByHandleNotFoundField(t *testing.T) {
@@ -48,7 +44,5 @@ func TestOrderByHandleNotFoundField(t *testing.T) {
 	orderBy := helpers.OrderByHandler(selectField, model.UserModel{})
 	expectedOrderBy := ""
 
-	if expectedOrderBy != orderBy {
-		t.Errorf("Should return %s, got %s", expectedOrderBy, orderBy)
-	}
+	assert.Equal(t, expectedOrderBy, orderBy)
 }

@@ -12,6 +12,8 @@ import (
 
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCheckInDBAtt(t *testing.T) {
@@ -22,16 +24,12 @@ func TestCheckInDBAtt(t *testing.T) {
 		selectField = strings.Join(res, ",")
 	}
 
-	if selectField != filterField {
-		t.Errorf("Should return %s, got %s", selectField, filterField)
-	}
+	assert.Equal(t, selectField, filterField)
 }
 
 func TestCheckMatchDBAtt(t *testing.T) {
 	selectField := "id"
 	field := helpers.CheckMatchDBAtt(model.UserModel{}, selectField)
 
-	if selectField != field {
-		t.Errorf("Should return %s, got %s", selectField, field)
-	}
+	assert.Equal(t, selectField, field)
 }

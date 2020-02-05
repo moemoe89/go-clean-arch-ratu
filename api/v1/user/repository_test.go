@@ -16,6 +16,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/xid"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGet(t *testing.T) {
@@ -40,10 +41,11 @@ func TestGet(t *testing.T) {
 	filter["limit"]  = "10"
 	filter["offset"] = "0"
 
-	_, err = u.Get(filter, where, orderBy, "")
-	if err != nil {
-		t.Errorf("Should return %v, got %s", nil, err.Error())
-	}
+	users, err := u.Get(filter, where, orderBy, "")
+
+	assert.NotEmpty(t, users)
+	assert.NoError(t, err)
+	assert.Len(t, users, 1)
 }
 
 func TestCount(t *testing.T) {
@@ -64,10 +66,10 @@ func TestCount(t *testing.T) {
 	where := "WHERE deleted_at IS NULL"
 	filter := map[string]interface{}{}
 
-	_, err = u.Count(filter, where)
-	if err != nil {
-		t.Errorf("Should return %v, got %s", nil, err.Error())
-	}
+	count, err := u.Count(filter, where)
+
+	assert.NoError(t, err)
+	assert.Equal(t, count, 1)
 }
 
 func TestCreate(t *testing.T) {
@@ -93,10 +95,10 @@ func TestCreate(t *testing.T) {
 	mock.ExpectExec(query).WithArgs(req.ID, req.Name, req.Email, req.Phone, req.Address, req.CreatedAt, req.UpdatedAt).WillReturnResult(sqlmock.NewResult(0, 1))
 
 	u := user.NewMysqlRepository(sqlxDB, sqlxDB)
-	_, err = u.Create(req)
-	if err != nil {
-		t.Errorf("Should return %v, got %s", nil, err.Error())
-	}
+	userRow, err := u.Create(req)
+
+	assert.NoError(t, err)
+	assert.Equal(t, req.ID, userRow.ID)
 }
 
 func TestGetByID(t *testing.T) {
@@ -125,10 +127,10 @@ func TestGetByID(t *testing.T) {
 	mock.ExpectQuery(query).WithArgs(req.ID).WillReturnRows(rows)
 	u := user.NewMysqlRepository(sqlxDB, sqlxDB)
 
-	_, err = u.GetByID(req.ID, "")
-	if err != nil {
-		t.Errorf("Should return %v, got %s", nil, err.Error())
-	}
+	userRow, err := u.GetByID(req.ID, "")
+
+	assert.NoError(t, err)
+	assert.NotNil(t, userRow)
 }
 
 func TestUpdate(t *testing.T) {
@@ -153,10 +155,10 @@ func TestUpdate(t *testing.T) {
 	mock.ExpectExec(query).WithArgs(req.Name, req.Email, req.Phone, req.Address, req.UpdatedAt, req.ID).WillReturnResult(sqlmock.NewResult(0, 1))
 	u := user.NewMysqlRepository(sqlxDB, sqlxDB)
 
-	_, err = u.Update(req)
-	if err != nil {
-		t.Errorf("Should return %v, got %s", nil, err.Error())
-	}
+	userRow, err := u.Update(req)
+
+	assert.NoError(t, err)
+	assert.Equal(t, req.ID, userRow.ID)
 }
 
 func TestDelete(t *testing.T) {
@@ -175,7 +177,6 @@ func TestDelete(t *testing.T) {
 	u := user.NewMysqlRepository(sqlxDB, sqlxDB)
 
 	err = u.Delete(id)
-	if err != nil {
-		t.Errorf("Should return %v, got %s", nil, err.Error())
-	}
+	
+	assert.NoError(t, err)
 }

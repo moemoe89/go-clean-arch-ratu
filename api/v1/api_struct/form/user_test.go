@@ -10,6 +10,8 @@ import (
 	"simple-go-clean-arch/api/v1/api_struct/form"
 
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestUserNameEmpty(t *testing.T) {
@@ -17,9 +19,8 @@ func TestUserNameEmpty(t *testing.T) {
 
 	expected := "Name can't be empty"
 	errs := user.Validate()
-	if errs[0] != expected {
-		t.Errorf("Should return %s, got %s", expected, errs[0])
-	}
+
+	assert.Equal(t, expected, errs[0])
 }
 
 func TestUserInvalidEmail(t *testing.T) {
@@ -30,7 +31,6 @@ func TestUserInvalidEmail(t *testing.T) {
 
 	expected := "Invalid email address"
 	errs := user.Validate()
-	if errs[0] != expected {
-		t.Errorf("Should return %s, got %s", expected, errs[0])
-	}
+
+	assert.Equal(t, expected, errs[0])
 }
