@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/moemoe89/simple-go-clean-arch/badge.svg?branch=master)](https://coveralls.io/github/moemoe89/simple-go-clean-arch?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/moemoe89/simple-go-clean-arch)](https://goreportcard.com/report/github.com/moemoe89/simple-go-clean-arch)
 
 # SIMPLE-GO-CLEAN-ARCH #
@@ -44,14 +45,14 @@ $ mv <cloned directory> simple-go-clean-arch
 * Copy `config-sample.json` to `config.json` and changes the value based on your configurations.
 * Create MySQL database for example named `simple_api` and do migration with `Goose` <https://bitbucket.org/liamstask/goose/>
 * Change database configuration on dbconf.yml like `dialect` and `dsn` for each environtment
-* Do the following command :
+* Do the following command
 ```
 $ cd $GOPATH/src/simple-go-clean-arch
 $ goose -env=development up
 ```
 
 ## Documetation with Swagger
-For open swagger access via browser to:
+For open swagger access via browser
 ```
 {{url}}/swagger/index.html
 ```
@@ -65,32 +66,32 @@ Make config file for local :
 ```
 $ cp config-sample.json config-local.json
 ```
-Build :
+Build
 ```
 $ cd $GOPATH/src/simple-go-clean-arch
 $ make build
 ```
-Run :
+Run
 ```
 $ cd $GOPATH/src/simple-go-clean-arch
 $ make run
 ```
-Stop :
+Stop
 ```
 $ cd $GOPATH/src/simple-go-clean-arch
 $ make stop
 ```
-Docker Build :
+Docker Build
 ```
 $ cd $GOPATH/src/simple-go-clean-arch
 $ make docker-build
 ```
-Docker Up :
+Docker Up
 ```
 $ cd $GOPATH/src/simple-go-clean-arch
 $ make docker-up
 ```
-Docker Down :
+Docker Down
 ```
 $ cd $GOPATH/src/simple-go-clean-arch
 $ make docker-down
@@ -101,29 +102,29 @@ Make config file for docker :
 ```
 $ cp config-sample.json config-docker.json
 ```
-Build :
+Build
 ```
 $ docker-compose build
 ```
-Run :
+Run
 ```
 $ docker-compose up
 ```
-Stop :
+Stop
 ```
 $ docker-compose down
 ```
 
 ## How to Run Unit Test
-Run :
+Run
 ```
 $ go test ./...
 ```
-Run with cover :
+Run with cover
 ```
 $ go test ./... -cover
 ```
-Run with HTML output :
+Run with HTML output
 ```
 $ go test ./... -coverprofile=c.out && go tool cover -html=c.out
 ```

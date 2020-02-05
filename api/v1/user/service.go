@@ -13,9 +13,6 @@ import (
 	"database/sql"
 	"errors"
 	"net/http"
-	"time"
-
-	"github.com/rs/xid"
 	"github.com/sirupsen/logrus"
 )
 
@@ -40,13 +37,11 @@ func NewService(log *logrus.Entry, r Repository) Service {
 
 func (u *implService) Create(req *form.UserForm) (*model.UserModel, int, error) {
 	userReq := &model.UserModel{
-		ID:        xid.New().String(),
-		Name:      req.Name,
-		Email:     req.Email,
-		Phone:     req.Phone,
-		Address:   req.Address,
-		CreatedAt: time.Now().UTC(),
-		UpdatedAt: time.Now().UTC(),
+		ID:      req.ID,
+		Name:    req.Name,
+		Email:   req.Email,
+		Phone:   req.Phone,
+		Address: req.Address,
 	}
 
 	user, err := u.repository.Create(userReq)
@@ -112,12 +107,11 @@ func (u *implService) List(filter, filterCount map[string]interface{}, where, or
 
 func (u *implService) Update(req *form.UserForm, id string) (*model.UserModel, int, error) {
 	user := &model.UserModel{
-		ID:        id,
-		Name:      req.Name,
-		Phone:     req.Phone,
-		Email:     req.Email,
-		Address:   req.Address,
-		UpdatedAt: time.Now().UTC(),
+		ID:      id,
+		Name:    req.Name,
+		Phone:   req.Phone,
+		Email:   req.Email,
+		Address: req.Address,
 	}
 
 	user, err := u.repository.Update(user)

@@ -6,6 +6,8 @@ definitions:
         type: string
       email:
         type: string
+      id:
+        type: string
       name:
         type: string
       phone:
@@ -219,7 +221,7 @@ paths:
           schema:
             $ref: '#/definitions/model.GenericResponse'
       summary: User Detail
-    post:
+    put:
       consumes:
       - application/json
       description: update user data

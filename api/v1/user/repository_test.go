@@ -81,18 +81,16 @@ func TestCreate(t *testing.T) {
 	sqlxDB := sqlx.NewDb(db,"sqlmock")
 
 	req := &model.UserModel{
-		ID:        xid.New().String(),
-		Name:      "Momo",
-		Email:     "momo@mail.com",
-		Phone:     "085640",
-		Address:   "Indonesia",
-		CreatedAt: time.Now().UTC(),
-		UpdatedAt: time.Now().UTC(),
+		ID:      xid.New().String(),
+		Name:    "Momo",
+		Email:   "momo@mail.com",
+		Phone:   "085640",
+		Address: "Indonesia",
 	}
 
-	query := "INSERT INTO users \\(id, name, email, phone, address, created_at, updated_at\\) VALUES \\(\\?, \\?, \\?, \\?, \\?, \\?, \\?\\)"
+	query := "INSERT INTO users \\(id, name, email, phone, address, created_at, updated_at\\) VALUES \\(\\?, \\?, \\?, \\?, \\?, UTC_TIMESTAMP\\(\\), UTC_TIMESTAMP\\(\\)\\)"
 
-	mock.ExpectExec(query).WithArgs(req.ID, req.Name, req.Email, req.Phone, req.Address, req.CreatedAt, req.UpdatedAt).WillReturnResult(sqlmock.NewResult(0, 1))
+	mock.ExpectExec(query).WithArgs(req.ID, req.Name, req.Email, req.Phone, req.Address).WillReturnResult(sqlmock.NewResult(0, 1))
 
 	u := user.NewMysqlRepository(sqlxDB, sqlxDB)
 	userRow, err := u.Create(req)
@@ -142,17 +140,16 @@ func TestUpdate(t *testing.T) {
 	sqlxDB := sqlx.NewDb(db,"sqlmock")
 
 	req := &model.UserModel{
-		ID:        xid.New().String(),
-		Name:      "Momo",
-		Email:     "momo@mail.com",
-		Phone:     "085640",
-		Address:   "Indonesia",
-		UpdatedAt: time.Now().UTC(),
+		ID:      xid.New().String(),
+		Name:    "Momo",
+		Email:   "momo@mail.com",
+		Phone:   "085640",
+		Address: "Indonesia",
 	}
 
-	query := "UPDATE users SET name = \\?, email = \\?, phone = \\?, address = \\?, updated_at = \\? WHERE id = \\?"
+	query := "UPDATE users SET name = \\?, email = \\?, phone = \\?, address = \\?, updated_at = UTC_TIMESTAMP\\(\\) WHERE id = \\?"
 
-	mock.ExpectExec(query).WithArgs(req.Name, req.Email, req.Phone, req.Address, req.UpdatedAt, req.ID).WillReturnResult(sqlmock.NewResult(0, 1))
+	mock.ExpectExec(query).WithArgs(req.Name, req.Email, req.Phone, req.Address, req.ID).WillReturnResult(sqlmock.NewResult(0, 1))
 	u := user.NewMysqlRepository(sqlxDB, sqlxDB)
 
 	userRow, err := u.Update(req)
@@ -177,6 +174,6 @@ func TestDelete(t *testing.T) {
 	u := user.NewMysqlRepository(sqlxDB, sqlxDB)
 
 	err = u.Delete(id)
-	
+
 	assert.NoError(t, err)
 }

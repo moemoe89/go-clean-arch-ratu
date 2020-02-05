@@ -54,7 +54,7 @@ func (m *mysqlRepository) Count(filter map[string]interface{}, where string) (in
 }
 
 func (m *mysqlRepository) Create(user *model.UserModel) (*model.UserModel, error) {
-	_, err := m.DBWrite.NamedExec(`INSERT INTO users (id, name, email, phone, address, created_at, updated_at) VALUES (:id, :name, :email, :phone, :address, :created_at, :updated_at)`, user)
+	_, err := m.DBWrite.NamedExec(`INSERT INTO users (id, name, email, phone, address, created_at, updated_at) VALUES (:id, :name, :email, :phone, :address, UTC_TIMESTAMP(), UTC_TIMESTAMP())`, user)
 	return user, err
 }
 
@@ -76,7 +76,7 @@ func (m *mysqlRepository) GetByID(id, selectField string) (*model.UserModel, err
 }
 
 func (m *mysqlRepository) Update(user *model.UserModel) (*model.UserModel, error) {
-	_, err := m.DBWrite.NamedExec(`UPDATE users SET name = :name, email = :email, phone = :phone, address = :address, updated_at = :updated_at WHERE id = :id`, user)
+	_, err := m.DBWrite.NamedExec(`UPDATE users SET name = :name, email = :email, phone = :phone, address = :address, updated_at = UTC_TIMESTAMP() WHERE id = :id`, user)
 	return user, err
 }
 

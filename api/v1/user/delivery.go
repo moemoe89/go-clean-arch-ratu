@@ -19,6 +19,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/moemoe89/go-localization"
 	"github.com/sirupsen/logrus"
+	"github.com/rs/xid"
 )
 
 type userCtrl struct {
@@ -64,6 +65,7 @@ func (u *userCtrl) Create(c *gin.Context) {
 		return
 	}
 
+	req.ID = xid.New().String()
 	user, status, err := u.svc.Create(req)
 	if err != nil {
 		c.JSON(status, model.NewGenericResponse(status, cons.ERR, []string{u.lang.Lookup(l, err.Error())}))
@@ -205,7 +207,7 @@ func (u *userCtrl) List(c *gin.Context) {
 // @Success 200 {object} model.UserResponse
 // @Failure 400 {object} model.GenericResponse
 // @Failure 500 {object} model.GenericResponse
-// @Router /user/{id} [post]
+// @Router /user/{id} [put]
 func (u *userCtrl) Update(c *gin.Context) {
 	l := c.Request.Header.Get("Accept-Language")
 	resp := &model.UserResponse{}
