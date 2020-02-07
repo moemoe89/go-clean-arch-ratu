@@ -7,10 +7,10 @@
 package user
 
 import (
-	"simple-go-clean-arch/api/v1/api_struct/form"
-	"simple-go-clean-arch/api/v1/api_struct/model"
-	cons "simple-go-clean-arch/constant"
-	"simple-go-clean-arch/helpers"
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/form"
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/model"
+	cons "github.com/moemoe89/simple-go-clean-arch/constant"
+	"github.com/moemoe89/simple-go-clean-arch/helpers"
 
 	"math"
 	"net/http"

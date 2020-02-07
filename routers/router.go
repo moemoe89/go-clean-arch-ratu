@@ -7,10 +7,10 @@
 package routers
 
 import (
-	ap "simple-go-clean-arch/api"
-	mw "simple-go-clean-arch/api/middleware"
-	"simple-go-clean-arch/api/v1/user"
-	conf "simple-go-clean-arch/config"
+	ap "github.com/moemoe89/simple-go-clean-arch/api"
+	mw "github.com/moemoe89/simple-go-clean-arch/api/middleware"
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
+	conf "github.com/moemoe89/simple-go-clean-arch/config"
 
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/files"

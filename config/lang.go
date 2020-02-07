@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"github.com/moemoe89/go-localization"
 )
@@ -21,7 +22,8 @@ func InitLang() (*language.Config, error) {
 	basepath := filepath.Dir(b)
 
 	cfg := language.New()
-	cfg.BindPath(basepath + "/../languages/lang.json")
+	basepath = strings.Replace(basepath, "config", "", -1)
+	cfg.BindPath(basepath + "/languages/lang.json")
 	cfg.BindMainLocale("en")
 
 	lang, err := cfg.Init()

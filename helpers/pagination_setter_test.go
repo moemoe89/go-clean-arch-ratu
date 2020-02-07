@@ -7,7 +7,7 @@
 package helpers_test
 
 import (
-	"simple-go-clean-arch/helpers"
+	"github.com/moemoe89/simple-go-clean-arch/helpers"
 
 	"testing"
 

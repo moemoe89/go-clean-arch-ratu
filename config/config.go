@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	"runtime"
+	"strings"
 )
 
 // ConfigurationModel represent the configuration model
@@ -37,7 +38,8 @@ func init() {
 	_, b, _, _ := runtime.Caller(0)
 	basepath := filepath.Dir(b)
 
-	file := basepath + "/../config.json"
+	basepath = strings.Replace(basepath, "config", "", -1)
+	file := basepath + "/config.json"
 	raw, err := ioutil.ReadFile(file)
 	if err != nil {
 		panic(fmt.Sprintf("Failed to load auth configuration file: %s", err.Error()))

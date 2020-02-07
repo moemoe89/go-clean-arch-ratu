@@ -7,8 +7,8 @@
 package user_test
 
 import (
-	"simple-go-clean-arch/api/v1/api_struct/model"
-	"simple-go-clean-arch/api/v1/user"
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/model"
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
 
 	"testing"
 	"time"

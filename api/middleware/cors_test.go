@@ -7,7 +7,7 @@
 package middleware_test
 
 import (
-	"simple-go-clean-arch/routers"
+	"github.com/moemoe89/simple-go-clean-arch/routers"
 
 	"net/http"
 	"net/http/httptest"

@@ -7,8 +7,8 @@
 package api
 
 import (
-	conf "simple-go-clean-arch/config"
-	cons "simple-go-clean-arch/constant"
+	conf "github.com/moemoe89/simple-go-clean-arch/config"
+	cons "github.com/moemoe89/simple-go-clean-arch/constant"
 
 	"net/http"
 	"time"

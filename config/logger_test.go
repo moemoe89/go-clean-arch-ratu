@@ -7,7 +7,7 @@
 package config_test
 
 import (
-	"simple-go-clean-arch/config"
+	"github.com/moemoe89/simple-go-clean-arch/config"
 
 	"testing"
 

@@ -3,7 +3,7 @@ services:
   app:
     build: .
     volumes:
-      - .:/go/src/simple-go-clean-arch
+      - .:/go/src/github.com/moemoe89/simple-go-clean-arch
     container_name: golang_api
     restart: always
     ports:

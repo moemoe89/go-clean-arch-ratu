@@ -7,9 +7,9 @@
 package main
 
 import (
-	conf "simple-go-clean-arch/config"
-	_ "simple-go-clean-arch/docs"
-	"simple-go-clean-arch/routers"
+	conf "github.com/moemoe89/simple-go-clean-arch/config"
+	_ "github.com/moemoe89/simple-go-clean-arch/docs"
+	"github.com/moemoe89/simple-go-clean-arch/routers"
 
 	"fmt"
 

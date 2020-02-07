@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/moemoe89/simple-go-clean-arch.svg?branch=master)](https://travis-ci.org/moemoe89/simple-go-clean-arch)
 [![Coverage Status](https://coveralls.io/repos/github/moemoe89/simple-go-clean-arch/badge.svg?branch=master)](https://coveralls.io/github/moemoe89/simple-go-clean-arch?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/moemoe89/simple-go-clean-arch)](https://goreportcard.com/report/github.com/moemoe89/simple-go-clean-arch)
 
@@ -10,7 +11,7 @@ Your project directory structure should look like this
 ```
   + your_gopath/
   |
-  +--+ src/
+  +--+ src/github.com/moemoe89
   |  |
   |  +--+ simple-go-clean-arch/
   |     |
@@ -35,8 +36,8 @@ Your project directory structure should look like this
 * Setup MariaDB <https://www.mariadb.org/>
 * Under `$GOPATH`, do the following command :
 ```
-$ mkdir -p src/
-$ cd src/
+$ mkdir -p src/github.com/moemoe89
+$ cd src/github.com/moemoe89
 $ git clone <url>
 $ mv <cloned directory> simple-go-clean-arch
 ```
@@ -47,7 +48,7 @@ $ mv <cloned directory> simple-go-clean-arch
 * Change database configuration on dbconf.yml like `dialect` and `dsn` for each environtment
 * Do the following command
 ```
-$ cd $GOPATH/src/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
 $ goose -env=development up
 ```
 
@@ -68,32 +69,32 @@ $ cp config-sample.json config-local.json
 ```
 Build
 ```
-$ cd $GOPATH/src/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
 $ make build
 ```
 Run
 ```
-$ cd $GOPATH/src/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
 $ make run
 ```
 Stop
 ```
-$ cd $GOPATH/src/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
 $ make stop
 ```
 Docker Build
 ```
-$ cd $GOPATH/src/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
 $ make docker-build
 ```
 Docker Up
 ```
-$ cd $GOPATH/src/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
 $ make docker-up
 ```
 Docker Down
 ```
-$ cd $GOPATH/src/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
 $ make docker-down
 ```
 
