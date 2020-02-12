@@ -10,28 +10,17 @@ import (
 	ap "github.com/moemoe89/simple-go-clean-arch/api"
 	mw "github.com/moemoe89/simple-go-clean-arch/api/middleware"
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
-	conf "github.com/moemoe89/simple-go-clean-arch/config"
 
 	"github.com/gin-gonic/gin"
+	"github.com/moemoe89/go-localization"
 	"github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
+
+	"github.com/sirupsen/logrus"
 )
 
 // GetRouter will create a variable that represent the gin.Engine
-func GetRouter() *gin.Engine {
-
-	dbR, dbW, err := conf.InitDB()
-	if err != nil {
-		panic(err)
-	}
-
-	lang, err := conf.InitLang()
-	if err != nil {
-		panic(err)
-	}
-
-	log := conf.InitLog()
-
+func GetRouter(lang *language.Config, log *logrus.Entry, userSvc user.Service) *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Recovery())
 	r.Use(mw.CORS)
@@ -41,8 +30,6 @@ func GetRouter() *gin.Engine {
 	api := r.Group("/api")
 	apiV1 := api.Group("/v1")
 
-	userRepo := user.NewMysqlRepository(dbR, dbW)
-	userSvc := user.NewService(log, userRepo)
 	usr := user.NewUserCtrl(lang, log, userSvc)
 
 	apiV1.POST("/user", usr.Create)

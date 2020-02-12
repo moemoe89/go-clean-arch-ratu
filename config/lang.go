@@ -23,7 +23,7 @@ func InitLang() (*language.Config, error) {
 
 	cfg := language.New()
 	basepath = strings.Replace(basepath, "config", "", -1)
-	cfg.BindPath(basepath + "/languages/lang.json")
+	cfg.BindPath(basepath + "languages/lang.json")
 	cfg.BindMainLocale("en")
 
 	lang, err := cfg.Init()

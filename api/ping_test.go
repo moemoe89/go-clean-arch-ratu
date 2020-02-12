@@ -7,6 +7,7 @@
 package api_test
 
 import (
+	"github.com/moemoe89/simple-go-clean-arch/config"
 	"github.com/moemoe89/simple-go-clean-arch/routers"
 
 	"net/http"
@@ -17,15 +18,14 @@ import (
 )
 
 func TestPingRoute(t *testing.T) {
-	router := routers.GetRouter()
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	router:= routers.GetRouter(lang, log, nil)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/ping", nil)
 	router.ServeHTTP(w, req)
-
-	if http.StatusOK != w.Code {
-		t.Errorf("Should return %v, got %v", http.StatusOK, w.Code)
-	}
 
 	assert.Equal(t, http.StatusOK, w.Code)
 }

@@ -7,6 +7,7 @@
 package middleware_test
 
 import (
+	"github.com/moemoe89/simple-go-clean-arch/config"
 	"github.com/moemoe89/simple-go-clean-arch/routers"
 
 	"net/http"
@@ -17,7 +18,10 @@ import (
 )
 
 func TestPingRoute(t *testing.T) {
-	router := routers.GetRouter()
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	router:= routers.GetRouter(lang, log, nil)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("OPTIONS", "/", nil)

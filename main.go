@@ -14,6 +14,7 @@ import (
 	"fmt"
 
 	"github.com/DeanThompson/ginpprof"
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
 )
 
 // @title Simple REST API
@@ -31,9 +32,24 @@ import (
 // @host
 // @BasePath /api/v1
 func main() {
-	app := routers.GetRouter()
+	dbR, dbW, err := conf.InitDB()
+	if err != nil {
+		panic(err)
+	}
+
+	lang, err := conf.InitLang()
+	if err != nil {
+		panic(err)
+	}
+
+	log := conf.InitLog()
+
+	userRepo := user.NewMysqlRepository(dbR, dbW)
+	userSvc := user.NewService(log, userRepo)
+
+	app := routers.GetRouter(lang, log, userSvc)
 	ginpprof.Wrap(app)
-	err := app.Run(":" + conf.Configuration.Port)
+	err = app.Run(":" + conf.Configuration.Port)
 	if err != nil {
 		panic(fmt.Sprintf("Can't start the app: %s", err.Error()))
 	}

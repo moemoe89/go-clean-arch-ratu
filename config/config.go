@@ -39,7 +39,7 @@ func init() {
 	basepath := filepath.Dir(b)
 
 	basepath = strings.Replace(basepath, "config", "", -1)
-	file := basepath + "/config.json"
+	file := basepath + "config.json"
 	raw, err := ioutil.ReadFile(file)
 	if err != nil {
 		panic(fmt.Sprintf("Failed to load auth configuration file: %s", err.Error()))
