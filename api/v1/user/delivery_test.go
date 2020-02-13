@@ -24,7 +24,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDeliveryUpadte(t *testing.T) {
+func TestDeliveryUpdate(t *testing.T) {
 	id := xid.New().String()
 
 	lang, _ := config.InitLang()
@@ -64,6 +64,129 @@ func TestDeliveryUpadte(t *testing.T) {
 	assert.NotNil(t, w.Body)
 }
 
+func TestDeliveryUpdateFail(t *testing.T) {
+	id := xid.New().String()
+
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	userForm := &form.UserForm{
+		ID:      xid.New().String(),
+		Name:    "Momo",
+		Email:   "momo@mail.com",
+		Phone:   "085640",
+		Address: "Indonesia",
+	}
+	user := &model.UserModel{
+		ID:      userForm.ID,
+		Name:    userForm.Name,
+		Email:   userForm.Email,
+		Phone:   userForm.Phone,
+		Address: userForm.Address,
+	}
+
+	j, err := json.Marshal(userForm)
+	assert.NoError(t, err)
+
+	mockService := new(mocks.Service)
+	mockService.On("Detail", id, "id").Return(user, 0, nil)
+	mockService.On("Update", userForm, id).Return(nil, http.StatusInternalServerError, errors.New("Unexpected database error"))
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(string(j)))
+	assert.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
+func TestDeliveryUpdateFailDetail(t *testing.T) {
+	id := xid.New().String()
+
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	userForm := &form.UserForm{
+		ID:      xid.New().String(),
+		Name:    "Momo",
+		Email:   "momo@mail.com",
+		Phone:   "085640",
+		Address: "Indonesia",
+	}
+
+	j, err := json.Marshal(userForm)
+	assert.NoError(t, err)
+
+	mockService := new(mocks.Service)
+	mockService.On("Detail", id, "id").Return(nil, http.StatusInternalServerError, errors.New("Unexpected database error"))
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(string(j)))
+	assert.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
+func TestDeliveryUpdateFailValidation(t *testing.T) {
+	id := xid.New().String()
+
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	userForm := &form.UserForm{
+		ID:      xid.New().String(),
+		Name:    "",
+		Email:   "momo@mail.com",
+		Phone:   "085640",
+		Address: "Indonesia",
+	}
+
+	j, err := json.Marshal(userForm)
+	assert.NoError(t, err)
+
+	mockService := new(mocks.Service)
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(string(j)))
+	assert.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
+func TestDeliveryUpdateFailBindJSON(t *testing.T) {
+	id := xid.New().String()
+
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	mockService := new(mocks.Service)
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(""))
+	assert.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
 func TestDeliveryList(t *testing.T) {
 	lang, _ := config.InitLang()
 	log := config.InitLog()
@@ -78,24 +201,76 @@ func TestDeliveryList(t *testing.T) {
 	users := []*model.UserModel{}
 	users = append(users, user)
 
+	name := "a"
+	email := "b"
+	phone := "0856"
+	createdAtStart := "2020-01-01"
+	createdAtEnd := "2020-01-31"
+
 	filter := map[string]interface{}{}
-	filter["name"] = "%a%"
-	filter["email"] = "%b%"
-	filter["phone"] = "%0856%"
+	filter["name"] = "%"+name+"%"
+	filter["email"] = "%"+email+"%"
+	filter["phone"] = "%"+phone+"%"
+	filter["created_at_start"] = createdAtStart
+	filter["created_at_end"] = createdAtEnd
 	filterCount := filter
 	filter["limit"] = 10
 	filter["offset"] = 0
 
 	mockService := new(mocks.Service)
-	mockService.On("List", filter, filterCount, "WHERE deleted_at IS NULL AND name LIKE :name AND email LIKE :email AND phone LIKE :phone", "created_at DESC", model.UserSelectField).Return(users, 1, 0, nil)
+	mockService.On("List", filter, filterCount, "WHERE deleted_at IS NULL AND name LIKE :name AND email LIKE :email AND phone LIKE :phone AND created_at >= :created_at_start AND created_at <= :created_at_end", "created_at DESC", model.UserSelectField).Return(users, 1, 0, nil)
 
 	router:= routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/api/v1/user?per_page=10&name=a&email=b&phone=0856", strings.NewReader(""))
+	req, _ := http.NewRequest("GET", "/api/v1/user?per_page=10&name="+name+"&email="+email+"&phone="+phone+"&created_at_start="+createdAtStart+"&created_at_end="+createdAtEnd, strings.NewReader(""))
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
+func TestDeliveryListFail(t *testing.T) {
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	filter := map[string]interface{}{}
+	filterCount := filter
+	filter["limit"] = 10
+	filter["offset"] = 0
+
+	mockService := new(mocks.Service)
+	mockService.On("List", filter, filterCount, "WHERE deleted_at IS NULL", "created_at DESC", model.UserSelectField).Return(nil, 0, http.StatusInternalServerError, errors.New("Oops! Something went wrong. Please try again later"))
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/api/v1/user?per_page=10", strings.NewReader(""))
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
+func TestDeliveryListFailPagination(t *testing.T) {
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	filter := map[string]interface{}{}
+	filterCount := filter
+	filter["limit"] = 10
+	filter["offset"] = 0
+
+	mockService := new(mocks.Service)
+	mockService.On("List", filter, filterCount, "WHERE deleted_at IS NULL", "created_at DESC", model.UserSelectField).Return(nil, 0, http.StatusInternalServerError, errors.New("Invalid parameter per_page: not an int"))
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/api/v1/user?per_page=a", strings.NewReader(""))
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
 	assert.NotNil(t, w.Body)
 }
 

@@ -158,14 +158,14 @@ func (u *userCtrl) List(c *gin.Context) {
 
 	createdAtStart := c.Query("created_at_start")
 	if len(createdAtStart) > 0 {
-		where += " AND created_at >= :created_at"
-		filter["created_at"] = createdAtStart
+		where += " AND created_at >= :created_at_start"
+		filter["created_at_start"] = createdAtStart
 	}
 
 	createdAtEnd := c.Query("created_at_end")
 	if len(createdAtEnd) > 0 {
-		where += " AND created_at <= :created_at"
-		filter["created_at"] = createdAtEnd
+		where += " AND created_at <= :created_at_end"
+		filter["created_at_end"] = createdAtEnd
 	}
 
 	filterCount := filter
