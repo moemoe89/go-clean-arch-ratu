@@ -24,6 +24,81 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestDeliveryCreateFail(t *testing.T) {
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	userForm := &form.UserForm{
+		Name:    "Momo",
+		Email:   "momo@mail.com",
+		Phone:   "085640",
+		Address: "Indonesia",
+	}
+
+	j, err := json.Marshal(userForm)
+	assert.NoError(t, err)
+
+	mockService := new(mocks.Service)
+	mockService.On("Create", userForm).Return(nil, http.StatusInternalServerError, errors.New("Unexpected database error"))
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, err := http.NewRequest("POST", "/api/v1/user", strings.NewReader(string(j)))
+	assert.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
+func TestDeliveryCreateFailValidation(t *testing.T) {
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	userForm := &form.UserForm{
+		Name:    "",
+		Email:   "momo@mail.com",
+		Phone:   "085640",
+		Address: "Indonesia",
+	}
+
+	j, err := json.Marshal(userForm)
+	assert.NoError(t, err)
+
+	mockService := new(mocks.Service)
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, err := http.NewRequest("POST", "/api/v1/user", strings.NewReader(string(j)))
+	assert.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
+func TestDeliveryCreateFailBindJSON(t *testing.T) {
+	lang, _ := config.InitLang()
+	log := config.InitLog()
+
+	mockService := new(mocks.Service)
+
+	router:= routers.GetRouter(lang, log, mockService)
+
+	w := httptest.NewRecorder()
+	req, err := http.NewRequest("POST", "/api/v1/user", strings.NewReader(""))
+	assert.NoError(t, err)
+	req.Header.Set("Content-Type", "application/json")
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+	assert.NotNil(t, w.Body)
+}
+
 func TestDeliveryUpdate(t *testing.T) {
 	id := xid.New().String()
 

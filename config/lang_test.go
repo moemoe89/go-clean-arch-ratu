@@ -5,3 +5,17 @@
 //
 
 package config_test
+
+import (
+	"github.com/moemoe89/simple-go-clean-arch/config"
+
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
+
+func TestLang(t *testing.T) {
+	_, err := config.InitLang()
+
+	assert.Nil(t, err)
+}
