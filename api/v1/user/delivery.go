@@ -10,7 +10,7 @@ import (
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/form"
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/model"
 	cons "github.com/moemoe89/simple-go-clean-arch/constant"
-	"github.com/moemoe89/simple-go-clean-arch/helpers"
+	"github.com/moemoe89/go-helpers"
 
 	"math"
 	"net/http"
@@ -123,14 +123,14 @@ func (u *userCtrl) List(c *gin.Context) {
 
 	userModel := model.UserModel{}
 
-	ok, offset, perPage, showPage, msg := helpers.PaginationSetter(c.Query("per_page"), c.Query("page"))
-	if !ok {
-		c.JSON(http.StatusInternalServerError, model.NewGenericResponse(http.StatusInternalServerError, cons.ERR, []string{u.lang.Lookup(l, msg)}))
+	offset, perPage, showPage, err := helpers.PaginationSetter(c.Query("per_page"), c.Query("page"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, model.NewGenericResponse(http.StatusInternalServerError, cons.ERR, []string{u.lang.Lookup(l, err.Error())}))
 		return
 	}
 
 	orderBy := c.Query("order_by")
-	orderBy = helpers.OrderByHandler(orderBy, userModel)
+	orderBy = helpers.OrderByHandler(orderBy, "db", userModel)
 	if len(orderBy) < 1 {
 		orderBy = "created_at DESC"
 	}
@@ -175,7 +175,7 @@ func (u *userCtrl) List(c *gin.Context) {
 	selectField := model.UserSelectField
 	filterField := c.Query("select_field")
 	if len(filterField) > 0 {
-		res := helpers.CheckInDBAtt(userModel, filterField)
+		res := helpers.CheckInTag(userModel, filterField, "db")
 		if len(res) > 0 {
 			selectField = strings.Join(res, ",")
 		}
