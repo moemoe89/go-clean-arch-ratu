@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/moemoe89/simple-go-clean-arch.svg?branch=master)](https://travis-ci.org/moemoe89/simple-go-clean-arch)
-[![Coverage Status](https://coveralls.io/repos/github/moemoe89/simple-go-clean-arch/badge.svg?branch=master)](https://coveralls.io/github/moemoe89/simple-go-clean-arch?branch=master)
+[![codecov](https://codecov.io/gh/moemoe89/simple-go-clean-arch/branch/master/graph/badge.svg)](https://codecov.io/gh/moemoe89/simple-go-clean-arch)
 [![Go Report Card](https://goreportcard.com/badge/github.com/moemoe89/simple-go-clean-arch)](https://goreportcard.com/report/github.com/moemoe89/simple-go-clean-arch)
 
 # SIMPLE-GO-CLEAN-ARCH #
@@ -82,6 +82,10 @@ Stop
 $ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
 $ make stop
 ```
+Make config file for docker :
+```
+$ cp config-sample.json config-docker.json
+```
 Docker Build
 ```
 $ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
@@ -101,7 +105,7 @@ $ make docker-down
 ## How to Run with Docker
 Make config file for docker :
 ```
-$ cp config-sample.json config-docker.json
+$ cp config-sample.json config.json
 ```
 Build
 ```

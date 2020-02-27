@@ -5,11 +5,13 @@ go:
   - tip
 
 before_install:
-   - go get github.com/mattn/goveralls
    - sudo cp config-sample.json config.json
 
 env:
   - GO111MODULE=on
 
 script:
-   - goveralls -service=travis-ci
+   - go test -v -coverprofile=coverage.out ./...
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -P ${CODECOV_TOKEN##*/}
