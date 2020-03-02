@@ -37,6 +37,20 @@ func main() {
 		panic(err)
 	}
 
+	defer func() {
+		err := dbR.Close()
+		if err != nil {
+			panic(err)
+		}
+	}()
+
+	defer func() {
+		err := dbW.Close()
+		if err != nil {
+			panic(err)
+		}
+	}()
+
 	lang, err := conf.InitLang()
 	if err != nil {
 		panic(err)
