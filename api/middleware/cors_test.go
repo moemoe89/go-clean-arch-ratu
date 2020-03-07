@@ -21,7 +21,7 @@ func TestPingRoute(t *testing.T) {
 	lang, _ := config.InitLang()
 	log := config.InitLog()
 
-	router:= routers.GetRouter(lang, log, nil)
+	router := routers.GetRouter(lang, log, nil)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("OPTIONS", "/", nil)

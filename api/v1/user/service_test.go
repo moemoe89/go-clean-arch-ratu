@@ -9,8 +9,8 @@ package user_test
 import (
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/form"
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/model"
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/user/mocks"
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/user/mocks"
 	"github.com/moemoe89/simple-go-clean-arch/config"
 
 	"database/sql"
@@ -52,7 +52,7 @@ func TestServiceCreate(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, userRow)
-		assert.Equal(t,0, status)
+		assert.Equal(t, 0, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -65,7 +65,7 @@ func TestServiceCreate(t *testing.T) {
 
 		assert.Error(t, err)
 		assert.Nil(t, userRow)
-		assert.Equal(t,http.StatusInternalServerError, status)
+		assert.Equal(t, http.StatusInternalServerError, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -92,7 +92,7 @@ func TestServiceDelete(t *testing.T) {
 		status, err := u.Delete(mockUser.ID)
 
 		assert.NoError(t, err)
-		assert.Equal(t,0, status)
+		assert.Equal(t, 0, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -105,11 +105,10 @@ func TestServiceDelete(t *testing.T) {
 		status, err := u.Delete(mockUser.ID)
 
 		assert.Error(t, err)
-		assert.Equal(t,http.StatusInternalServerError, status)
+		assert.Equal(t, http.StatusInternalServerError, status)
 
 		mockRepo.AssertExpectations(t)
 	})
-
 
 	t.Run("failed-get-not-found", func(t *testing.T) {
 		mockRepo.On("GetByID", mock.AnythingOfType("string"), "id").Return(nil, sql.ErrNoRows).Once()
@@ -119,7 +118,7 @@ func TestServiceDelete(t *testing.T) {
 		status, err := u.Delete(mockUser.ID)
 
 		assert.Error(t, err)
-		assert.Equal(t,http.StatusNotFound, status)
+		assert.Equal(t, http.StatusNotFound, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -131,7 +130,7 @@ func TestServiceDelete(t *testing.T) {
 		status, err := u.Delete(mockUser.ID)
 
 		assert.Error(t, err)
-		assert.Equal(t,http.StatusInternalServerError, status)
+		assert.Equal(t, http.StatusInternalServerError, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -159,7 +158,7 @@ func TestServiceDetail(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, userRow)
-		assert.Equal(t,0, status)
+		assert.Equal(t, 0, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -172,7 +171,7 @@ func TestServiceDetail(t *testing.T) {
 
 		assert.Error(t, err)
 		assert.Nil(t, userRow)
-		assert.Equal(t,http.StatusNotFound, status)
+		assert.Equal(t, http.StatusNotFound, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -185,7 +184,7 @@ func TestServiceDetail(t *testing.T) {
 
 		assert.Error(t, err)
 		assert.Nil(t, userRow)
-		assert.Equal(t,http.StatusInternalServerError, status)
+		assert.Equal(t, http.StatusInternalServerError, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -223,7 +222,7 @@ func TestServiceList(t *testing.T) {
 		assert.NoError(t, err)
 		assert.NotNil(t, users)
 		assert.Equal(t, 1, count)
-		assert.Equal(t,0, status)
+		assert.Equal(t, 0, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -238,7 +237,7 @@ func TestServiceList(t *testing.T) {
 		assert.Error(t, err)
 		assert.Nil(t, users)
 		assert.Equal(t, 0, count)
-		assert.Equal(t,http.StatusInternalServerError, status)
+		assert.Equal(t, http.StatusInternalServerError, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -254,7 +253,7 @@ func TestServiceList(t *testing.T) {
 		assert.Error(t, err)
 		assert.Nil(t, users)
 		assert.Equal(t, 0, count)
-		assert.Equal(t,http.StatusInternalServerError, status)
+		assert.Equal(t, http.StatusInternalServerError, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -287,7 +286,7 @@ func TestServiceUpdate(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.NotNil(t, userRow)
-		assert.Equal(t,0, status)
+		assert.Equal(t, 0, status)
 
 		mockRepo.AssertExpectations(t)
 	})
@@ -300,7 +299,7 @@ func TestServiceUpdate(t *testing.T) {
 
 		assert.Error(t, err)
 		assert.Nil(t, userRow)
-		assert.Equal(t,http.StatusInternalServerError, status)
+		assert.Equal(t, http.StatusInternalServerError, status)
 
 		mockRepo.AssertExpectations(t)
 	})

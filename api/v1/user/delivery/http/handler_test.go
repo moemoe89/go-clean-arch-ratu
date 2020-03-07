@@ -4,7 +4,7 @@
 //  Copyright © 2020. All rights reserved.
 //
 
-package user_test
+package http_test
 
 import (
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/form"
@@ -41,7 +41,7 @@ func TestDeliveryCreateFail(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("Create", userForm).Return(nil, http.StatusInternalServerError, errors.New("Unexpected database error"))
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("POST", "/api/v1/user", strings.NewReader(string(j)))
@@ -69,7 +69,7 @@ func TestDeliveryCreateFailValidation(t *testing.T) {
 
 	mockService := new(mocks.Service)
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("POST", "/api/v1/user", strings.NewReader(string(j)))
@@ -87,7 +87,7 @@ func TestDeliveryCreateFailBindJSON(t *testing.T) {
 
 	mockService := new(mocks.Service)
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("POST", "/api/v1/user", strings.NewReader(""))
@@ -127,7 +127,7 @@ func TestDeliveryUpdate(t *testing.T) {
 	mockService.On("Detail", id, "id").Return(user, 0, nil)
 	mockService.On("Update", userForm, id).Return(user, 0, nil)
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(string(j)))
@@ -167,7 +167,7 @@ func TestDeliveryUpdateFail(t *testing.T) {
 	mockService.On("Detail", id, "id").Return(user, 0, nil)
 	mockService.On("Update", userForm, id).Return(nil, http.StatusInternalServerError, errors.New("Unexpected database error"))
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(string(j)))
@@ -199,7 +199,7 @@ func TestDeliveryUpdateFailDetail(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("Detail", id, "id").Return(nil, http.StatusInternalServerError, errors.New("Unexpected database error"))
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(string(j)))
@@ -230,7 +230,7 @@ func TestDeliveryUpdateFailValidation(t *testing.T) {
 
 	mockService := new(mocks.Service)
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(string(j)))
@@ -250,7 +250,7 @@ func TestDeliveryUpdateFailBindJSON(t *testing.T) {
 
 	mockService := new(mocks.Service)
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, err := http.NewRequest("PUT", "/api/v1/user/"+id, strings.NewReader(""))
@@ -283,9 +283,9 @@ func TestDeliveryList(t *testing.T) {
 	createdAtEnd := "2020-01-31"
 
 	filter := map[string]interface{}{}
-	filter["name"] = "%"+name+"%"
-	filter["email"] = "%"+email+"%"
-	filter["phone"] = "%"+phone+"%"
+	filter["name"] = "%" + name + "%"
+	filter["email"] = "%" + email + "%"
+	filter["phone"] = "%" + phone + "%"
 	filter["created_at_start"] = createdAtStart
 	filter["created_at_end"] = createdAtEnd
 	filterCount := filter
@@ -295,7 +295,7 @@ func TestDeliveryList(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("List", filter, filterCount, "WHERE deleted_at IS NULL AND name LIKE :name AND email LIKE :email AND phone LIKE :phone AND created_at >= :created_at_start AND created_at <= :created_at_end", "created_at DESC", model.UserSelectField).Return(users, 1, 0, nil)
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/v1/user?per_page=10&name="+name+"&email="+email+"&phone="+phone+"&created_at_start="+createdAtStart+"&created_at_end="+createdAtEnd, strings.NewReader(""))
@@ -317,7 +317,7 @@ func TestDeliveryListFail(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("List", filter, filterCount, "WHERE deleted_at IS NULL", "created_at DESC", model.UserSelectField).Return(nil, 0, http.StatusInternalServerError, errors.New("Oops! Something went wrong. Please try again later"))
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/v1/user?per_page=10", strings.NewReader(""))
@@ -339,7 +339,7 @@ func TestDeliveryListFailPagination(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("List", filter, filterCount, "WHERE deleted_at IS NULL", "created_at DESC", model.UserSelectField).Return(nil, 0, http.StatusInternalServerError, errors.New("Invalid parameter per_page: not an int"))
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/v1/user?per_page=a", strings.NewReader(""))
@@ -366,7 +366,7 @@ func TestDeliveryDetail(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("Detail", id, model.UserSelectField).Return(user, 0, nil)
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/v1/user/"+id, strings.NewReader(""))
@@ -384,7 +384,7 @@ func TestDeliveryDetailFail(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("Detail", id, model.UserSelectField).Return(nil, http.StatusInternalServerError, errors.New("Unexpected database error"))
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/v1/user/"+id, strings.NewReader(""))
@@ -401,7 +401,7 @@ func TestDeliveryDelete(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("Delete", id).Return(0, nil)
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("DELETE", "/api/v1/user/"+id, strings.NewReader(""))
@@ -418,7 +418,7 @@ func TestDeliveryDeleteFail(t *testing.T) {
 	mockService := new(mocks.Service)
 	mockService.On("Delete", id).Return(http.StatusInternalServerError, errors.New("Unexpected database error"))
 
-	router:= routers.GetRouter(lang, log, mockService)
+	router := routers.GetRouter(lang, log, mockService)
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("DELETE", "/api/v1/user/"+id, strings.NewReader(""))

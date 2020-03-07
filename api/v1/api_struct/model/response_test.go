@@ -9,15 +9,15 @@ package model_test
 import (
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/model"
 
-	"testing"
 	"net/http"
+	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestNewGenericResponse(t *testing.T) {
-	status   := http.StatusOK
-	success  := 0
+	status := http.StatusOK
+	success := 0
 	messages := []string{"OK"}
 
 	resp := model.NewGenericResponse(status, success, messages)
@@ -28,8 +28,8 @@ func TestNewGenericResponse(t *testing.T) {
 }
 
 func TestNewPaginationResponse(t *testing.T) {
-	page      := 1
-	perPage   := 2
+	page := 1
+	perPage := 2
 	totalPage := 3
 	totalData := 4
 

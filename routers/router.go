@@ -10,6 +10,7 @@ import (
 	ap "github.com/moemoe89/simple-go-clean-arch/api"
 	mw "github.com/moemoe89/simple-go-clean-arch/api/middleware"
 	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/user/delivery/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/moemoe89/go-localization"
@@ -30,7 +31,7 @@ func GetRouter(lang *language.Config, log *logrus.Entry, userSvc user.Service) *
 	api := r.Group("/api")
 	apiV1 := api.Group("/v1")
 
-	usr := user.NewUserCtrl(lang, log, userSvc)
+	usr := http.NewUserCtrl(lang, log, userSvc)
 
 	apiV1.POST("/user", usr.Create)
 	apiV1.GET("/user", usr.List)
