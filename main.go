@@ -7,6 +7,7 @@
 package main
 
 import (
+	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
 	conf "github.com/moemoe89/simple-go-clean-arch/config"
 	_ "github.com/moemoe89/simple-go-clean-arch/docs"
 	"github.com/moemoe89/simple-go-clean-arch/routers"
@@ -14,7 +15,6 @@ import (
 	"fmt"
 
 	"github.com/DeanThompson/ginpprof"
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
 )
 
 // @title Simple REST API

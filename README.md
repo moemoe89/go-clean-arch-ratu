@@ -133,3 +133,11 @@ Run with HTML output
 ```
 $ go test ./... -coverprofile=c.out && go tool cover -html=c.out
 ```
+
+## Reference
+
+Thanks to this medium [link](https://medium.com/golangid/mencoba-golang-clean-architecture-c2462f355f41) for sharing the great article
+
+## License
+
+MIT

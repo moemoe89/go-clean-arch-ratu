@@ -14,10 +14,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/moemoe89/go-localization"
+	"github.com/sirupsen/logrus"
 	"github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
-
-	"github.com/sirupsen/logrus"
 )
 
 // GetRouter will create a variable that represent the gin.Engine
