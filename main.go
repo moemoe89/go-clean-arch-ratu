@@ -7,10 +7,10 @@
 package main
 
 import (
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
-	conf "github.com/moemoe89/simple-go-clean-arch/config"
-	_ "github.com/moemoe89/simple-go-clean-arch/docs"
-	"github.com/moemoe89/simple-go-clean-arch/routers"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/user"
+	conf "github.com/moemoe89/go-clean-arch-ratu/config"
+	_ "github.com/moemoe89/go-clean-arch-ratu/docs"
+	"github.com/moemoe89/go-clean-arch-ratu/routers"
 
 	"fmt"
 

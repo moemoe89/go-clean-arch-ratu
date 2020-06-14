@@ -9,7 +9,7 @@ CREATE TABLE `users` (
     `name` varchar(50) NOT NULL DEFAULT '',
     `email` varchar(50) NOT NULL DEFAULT '',
     `phone` varchar(20) NOT NULL DEFAULT '',
-    `address` text NOT NULL DEFAULT '',
+    `address` text NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `id` (`id`),
     KEY `idx_deleted_at` (`deleted_at`)

@@ -7,8 +7,8 @@
 package api_test
 
 import (
-	"github.com/moemoe89/simple-go-clean-arch/config"
-	"github.com/moemoe89/simple-go-clean-arch/routers"
+	"github.com/moemoe89/go-clean-arch-ratu/config"
+	"github.com/moemoe89/go-clean-arch-ratu/routers"
 
 	"net/http"
 	"net/http/httptest"

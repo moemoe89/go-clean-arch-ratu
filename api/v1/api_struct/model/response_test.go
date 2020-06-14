@@ -7,7 +7,7 @@
 package model_test
 
 import (
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/model"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/api_struct/model"
 
 	"net/http"
 	"testing"

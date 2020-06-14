@@ -7,10 +7,10 @@
 package routers
 
 import (
-	ap "github.com/moemoe89/simple-go-clean-arch/api"
-	mw "github.com/moemoe89/simple-go-clean-arch/api/middleware"
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/user"
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/user/delivery/http"
+	ap "github.com/moemoe89/go-clean-arch-ratu/api"
+	mw "github.com/moemoe89/go-clean-arch-ratu/api/middleware"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/user"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/user/delivery/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/moemoe89/go-localization"

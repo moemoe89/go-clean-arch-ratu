@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/moemoe89/simple-go-clean-arch.svg?branch=master)](https://travis-ci.org/moemoe89/simple-go-clean-arch)
-[![codecov](https://codecov.io/gh/moemoe89/simple-go-clean-arch/branch/master/graph/badge.svg)](https://codecov.io/gh/moemoe89/simple-go-clean-arch)
-[![Go Report Card](https://goreportcard.com/badge/github.com/moemoe89/simple-go-clean-arch)](https://goreportcard.com/report/github.com/moemoe89/simple-go-clean-arch)
+[![Build Status](https://travis-ci.org/moemoe89/go-clean-arch-ratu.svg?branch=master)](https://travis-ci.org/moemoe89/go-clean-arch-ratu)
+[![codecov](https://codecov.io/gh/moemoe89/go-clean-arch-ratu/branch/master/graph/badge.svg)](https://codecov.io/gh/moemoe89/go-clean-arch-ratu)
+[![Go Report Card](https://goreportcard.com/badge/github.com/moemoe89/go-clean-arch-ratu)](https://goreportcard.com/report/github.com/moemoe89/go-clean-arch-ratu)
 
-# SIMPLE-GO-CLEAN-ARCH #
+# GO-CLEAN-ARCH-RATU #
 
 Simple Go Clean Arch Using Golang (Gin Gonic Framework) as Programming Language, MariaDB as Database
 
@@ -13,7 +13,7 @@ Your project directory structure should look like this
   |
   +--+ src/github.com/moemoe89
   |  |
-  |  +--+ simple-go-clean-arch/
+  |  +--+ go-clean-arch-ratu/
   |     |
   |     +--+ main.go
   |        + api/
@@ -39,7 +39,7 @@ Your project directory structure should look like this
 $ mkdir -p src/github.com/moemoe89
 $ cd src/github.com/moemoe89
 $ git clone <url>
-$ mv <cloned directory> simple-go-clean-arch
+$ mv <cloned directory> go-clean-arch-ratu
 ```
 
 ## Running Migration
@@ -48,7 +48,7 @@ $ mv <cloned directory> simple-go-clean-arch
 * Change database configuration on dbconf.yml like `dialect` and `dsn` for each environtment
 * Do the following command
 ```
-$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/go-clean-arch-ratu
 $ goose -env=development up
 ```
 
@@ -69,17 +69,17 @@ $ cp config-sample.json config-local.json
 ```
 Build
 ```
-$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/go-clean-arch-ratu
 $ make build
 ```
 Run
 ```
-$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/go-clean-arch-ratu
 $ make run
 ```
 Stop
 ```
-$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/go-clean-arch-ratu
 $ make stop
 ```
 Make config file for docker :
@@ -88,17 +88,17 @@ $ cp config-sample.json config-docker.json
 ```
 Docker Build
 ```
-$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/go-clean-arch-ratu
 $ make docker-build
 ```
 Docker Up
 ```
-$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/go-clean-arch-ratu
 $ make docker-up
 ```
 Docker Down
 ```
-$ cd $GOPATH/src/github.com/moemoe89/simple-go-clean-arch
+$ cd $GOPATH/src/github.com/moemoe89/go-clean-arch-ratu
 $ make docker-down
 ```
 

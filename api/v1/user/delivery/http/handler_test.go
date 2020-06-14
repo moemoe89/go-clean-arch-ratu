@@ -7,11 +7,11 @@
 package http_test
 
 import (
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/form"
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/model"
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/user/mocks"
-	"github.com/moemoe89/simple-go-clean-arch/config"
-	"github.com/moemoe89/simple-go-clean-arch/routers"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/api_struct/form"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/api_struct/model"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/user/mocks"
+	"github.com/moemoe89/go-clean-arch-ratu/config"
+	"github.com/moemoe89/go-clean-arch-ratu/routers"
 
 	"encoding/json"
 	"errors"

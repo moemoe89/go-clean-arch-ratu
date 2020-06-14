@@ -7,10 +7,10 @@
 package http
 
 import (
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/form"
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/model"
-	usr "github.com/moemoe89/simple-go-clean-arch/api/v1/user"
-	cons "github.com/moemoe89/simple-go-clean-arch/constant"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/api_struct/form"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/api_struct/model"
+	usr "github.com/moemoe89/go-clean-arch-ratu/api/v1/user"
+	cons "github.com/moemoe89/go-clean-arch-ratu/constant"
 
 	"math"
 	"net/http"

@@ -7,7 +7,7 @@
 package form_test
 
 import (
-	"github.com/moemoe89/simple-go-clean-arch/api/v1/api_struct/form"
+	"github.com/moemoe89/go-clean-arch-ratu/api/v1/api_struct/form"
 
 	"testing"
 
