@@ -4,7 +4,7 @@ services:
     build: .
     volumes:
       - .:/go/src/github.com/moemoe89/go-clean-arch-ratu
-    container_name: golang_api
+    container_name: go_clean_arch_ratu
     restart: always
     ports:
       - "8787:8787"
@@ -20,7 +20,7 @@ services:
       MYSQL_DATABASE: simple_api
       MYSQL_USER: docker
       MYSQL_PASSWORD: docker
-    container_name: golang_db
+    container_name: db_mariadb
     restart: always
     ports:
       - "3308:3306"
